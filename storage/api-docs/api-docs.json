@@ -1,0 +1,41 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CarSharing API Documentation",
+        "description": "Документация для API монолит-приложения",
+        "contact": {
+            "name": "Эксклюзивная IT компания 'Велосипеды и Ко, но Ко не компания, а Костыли'",
+            "url": "https://cs4.pikabu.ru/post_img/big/2015/05/07/6/1430989171_1871837159.jpg",
+            "email": "daniil@carsharing.egypt"
+        },
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://79.140.21.83:8833/api_v1",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Выводит всех юзеров нашего приложения",
+                "operationId": "usersAll",
+                "responses": {
+                    "200": {
+                        "description": "An example endpoint"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Users",
+            "description": "abracadabra"
+        }
+    ]
+}

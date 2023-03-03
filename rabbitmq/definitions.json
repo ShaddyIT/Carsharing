@@ -1,0 +1,80 @@
+{
+    "users":[
+        {
+            "name":"carsharing",
+            "password":"carsharing56",
+            "tags":"administrator",
+            "limits": {}
+        }
+    ],
+    "vhosts":[
+        {
+            "name":"carsharing_vhost_default"
+        }
+    ],
+    "permissions":[
+        {
+            "user":"carsharing",
+            "vhost":"carsharing_vhost_default",
+            "configure":".*",
+            "write":".*",
+            "read":".*"
+        }
+    ],
+    "parametrs":[],
+    "policies":[],
+    "exchanges":[
+        {
+            "name":"car.sensor.exchange",
+            "vhost":"carsharing_vhost_default",
+            "type":"direct",
+            "durable":true,
+            "auto_delete":false,
+            "internal":false,
+            "arguments":{}
+        },
+        {
+            "name":"failed",
+            "vhost":"carsharing_vhost_default",
+            "type":"direct",
+            "durable":true,
+            "auto_delete":false,
+            "internal":false,
+            "arguments":{}
+        }
+    ],
+    "queues":[
+        {
+            "name":"car_sensor_jobs",
+            "vhost":"carsharing_vhost_default",
+            "durable":true,
+            "auto_delete":false,
+            "arguments":{}
+        },
+        {
+            "name":"failed_jobs",
+            "vhost":"carsharing_vhost_default",
+            "durable":true,
+            "auto_delete":false,
+            "arguments":{}   
+        }
+    ],
+    "bindings":[
+        {
+            "source":"car.sensor.exchange",
+            "vhost":"carsharing_vhost_default",
+            "destination":"car_sensor_jobs",
+            "routing_key":"car_sensor",
+            "destination_type": "queue",
+            "arguments": {}
+        },
+        {
+            "source":"failed",
+            "vhost":"carsharing_vhost_default",
+            "destination":"failed_jobs",
+            "destination_type": "queue",
+            "routing_key":"fail",
+            "arguments": {}
+        }
+    ]
+}
