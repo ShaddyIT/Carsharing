@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BalanceUpRequest;
 use App\Http\Resources\BalanceUpResource;
 use App\Models\BalanceUp;
+use App\Services\CashService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class BalanceUpController extends Controller
 {
@@ -16,9 +18,9 @@ class BalanceUpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BalanceUp::all();
+        return BalanceUp::filter($request->all())->paginate(5);
     }
 
     /**
@@ -27,10 +29,9 @@ class BalanceUpController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BalanceUpRequest $request)
+    public function store(BalanceUpRequest $request, CashService $service)
     {
-        $balance_up = BalanceUp::create($request->validated());
-        return $balance_up;
+        return $service->balanceUp($request, $request->money);
     }
 
     /**
@@ -41,6 +42,7 @@ class BalanceUpController extends Controller
      */
     public function show($id)
     {
+        // dd($id);
         return BalanceUp::find($id);
     }
 
@@ -63,9 +65,10 @@ class BalanceUpController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BalanceUp $balance_up)
+    public function destroy($id)
     {
+        $balance_up = BalanceUp::find($id);
         $balance_up->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response('deleted');
     }
 }

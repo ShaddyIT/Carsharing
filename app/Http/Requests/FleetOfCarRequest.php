@@ -24,7 +24,7 @@ class FleetOfCarRequest extends FormRequest
     public function rules()
     {
         return [
-            'car_model_id' => 'integer',
+            'car_model_id' => 'uuid',
             'state_number' => 'alpha_num',
             'vin_number' => 'alpha_num',
             'cost_per_minute' => 'integer',

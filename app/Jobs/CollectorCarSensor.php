@@ -37,6 +37,7 @@ class CollectorCarSensor implements ShouldQueue
         $new_car = CarEvent::create($this->car_event);
         return $new_car;
     }
+    
     public function failed()
     {
         dispatch(new CollectorCarSensor($this->car_event))->onQueue('failed_jobs');

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStatusRequest extends FormRequest
+class UserCreateRentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class UserStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|max:255'
+            'user_id' => 'required|uuid',
+            'car_id' => 'required|uuid',
+            'start_time' => 'required|date',
         ];
     }
 }

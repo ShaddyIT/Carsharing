@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventStoreRequest extends FormRequest
+class UserUpdateRentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class EventStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'event' => 'required|max:255'
+            'end_time' => 'required|date',
         ];
     }
 }

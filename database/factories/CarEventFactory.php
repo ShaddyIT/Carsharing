@@ -1,8 +1,9 @@
 <?php
 
 namespace Database\Factories;
+
+use App\Enums\CarEvent;
 use App\Models\FleetOfCar;
-use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class CarEventFactory extends Factory
     {
         return [
             'car_id' => FleetOfCar::inRandomOrder()->first()->id,
-            'event_id' => Event::inRandomOrder()->first()->id,
+            'event' => CarEvent::getRandomValue(),
             'fuel' => $this->faker-> numberBetween(0, 60),
             'milleage' => $this->faker-> numberBetween(100, 99999),
             'latitude' => $this->faker-> latitude(-90, 90),

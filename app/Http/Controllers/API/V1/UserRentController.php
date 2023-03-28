@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRentRequest;
+use App\Http\Requests\UserCreateRentRequest;
+use App\Http\Requests\UserUpdateRentRequest;
+use App\Models\FleetOfCar;
 use App\Models\UserRent;
+use App\Services\CashService;
+use App\Services\RentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -26,10 +30,9 @@ class UserRentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRentRequest $request)
+    public function store(UserCreateRentRequest $request)
     {
-        $user_rent = UserRent::create($request->validated());
-        return $user_rent;
+        return RentService::createRent($request);
     }
 
     /**
@@ -50,10 +53,9 @@ class UserRentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRentRequest $request, UserRent $user_rent)
+    public function update(UserUpdateRentRequest $request, UserRent $user_rent)
     {
-        $user_rent->update($request->validated());
-        return $user_rent;
+        return CashService::balancePayRent($user_rent, $request);
     }
 
     /**

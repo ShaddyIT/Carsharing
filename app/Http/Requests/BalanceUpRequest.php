@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Services\CashService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BalanceUpRequest extends FormRequest
@@ -17,6 +18,19 @@ class BalanceUpRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'money' => CashService::moneyInDB($this->money) 
+        ]);
+        
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -24,7 +38,7 @@ class BalanceUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'date' => 'required|date',
             'money' => 'required|numeric'
         ];

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\UserStatus;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -24,7 +24,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'user_status_id'=> UserStatus::inRandomOrder()->first()->id,
+            'user_status'=> UserStatus::getRandomValue(),
             'remember_token' => Str::random(10),
 
         ];

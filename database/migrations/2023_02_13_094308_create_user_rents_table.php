@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_rents', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('car_id')->constrained('fleet_of_cars');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('car_id')->constrained('fleet_of_cars');
             $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->integer('final_cost')->unsigned();
+            $table->dateTime('end_time')->nullable();
+            $table->integer('final_cost')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

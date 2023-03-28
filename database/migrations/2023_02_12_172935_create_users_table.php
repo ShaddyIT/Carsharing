@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,17 +15,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('surname');
             $table->string('name');
             $table->string('patronymic');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('user_status_id')->constrained('user_statuses');
+            $table->enum('user_status', UserStatus::getValues())->default(UserStatus::DocumentNotAutorize);
             $table->bigInteger('balance')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

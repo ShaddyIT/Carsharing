@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRentRequest extends FormRequest
+class UserRequestUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,12 @@ class UserRentRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'integer',
-            'car_id' => 'integer',
-            'start_time' => 'date',
-            'end_time' => 'date',
-            'final_cost' => 'integer'
+            'surname'=>'string|max:255',
+            'name'=>'string|max:255',
+            'patronymic'=>'string|max:255',
+            'email'=>'email:rfc|max:255|unique:users,email',
+            'password' => 'alpha_num',
+            'user_status_id' => 'integer'
         ];
     }
 }

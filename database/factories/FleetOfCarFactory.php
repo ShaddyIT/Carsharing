@@ -1,8 +1,9 @@
 <?php
 
 namespace Database\Factories;
+
+use App\Enums\CarStatus;
 use App\Models\CarModel;
-use App\Models\CarStatus;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -32,7 +33,7 @@ class FleetOfCarFactory extends Factory
             'state_number'=>  $this->carNumber(),
             'vin_number'=> Str::random(17),
             'cost_per_minute'=> rand(5, 15),
-            'car_status_id' => CarStatus::inRandomOrder()->first()->id
+            'car_status' => CarStatus::getRandomValue()
         ];
     }
 }

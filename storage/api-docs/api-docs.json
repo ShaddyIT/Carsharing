@@ -2,40 +2,346 @@
     "openapi": "3.0.0",
     "info": {
         "title": "CarSharing API Documentation",
-        "description": "Документация для API монолит-приложения",
+        "description": "Документация для API приложения для каршеринга. Стек приложения: Nginx, PostgreSQL, Redis, RabbitMQ, Laravel",
+        "termsOfService": "How to use API",
         "contact": {
-            "name": "Эксклюзивная IT компания 'Велосипеды и Ко, но Ко не компания, а Костыли'",
-            "url": "https://cs4.pikabu.ru/post_img/big/2015/05/07/6/1430989171_1871837159.jpg",
-            "email": "daniil@carsharing.egypt"
+            "name": "ПроТехнологии",
+            "url": "https://pro-technologii.ru/",
+            "email": "popowdaniil99@gmail.com"
         },
-        "version": "0.1"
+        "license": {
+            "name": "Apache 2.0(fake for look how to use)",
+            "url": "asdfsa"
+        },
+        "version": "0.1 alfa"
     },
     "servers": [
         {
-            "url": "http://79.140.21.83:8833/api_v1",
+            "url": "http://79.140.21.83:8833",
             "description": "Development server"
         }
     ],
     "paths": {
-        "/users": {
+        "/api_v1/users": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Выводит всех юзеров нашего приложения",
-                "operationId": "usersAll",
+                "externalDocs": {
+                    "url": "https://haait.net/how-to-use-swagger-in-laravel/"
+                },
+                "operationId": "/api_v1/users(ALL)",
                 "responses": {
                     "200": {
                         "description": "An example endpoint"
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Создание пользователя",
+                "description": "description",
+                "operationId": "/api_v1/users(POST)",
+                "parameters": [
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "Фамилия пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Имя пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "patronymic",
+                        "in": "query",
+                        "description": "Отчество пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Пароль пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_status_id",
+                        "in": "query",
+                        "description": "Статус пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Пользователь создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api_v1/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Получить пользователя по его ID",
+                "description": "Данный endpoint позволяет получить аккаунт пользователя по его id",
+                "operationId": "/api_v1/users{id}(POST)",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Держи пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Изменение данных пользователя",
+                "description": "Изменяет определенные данные пользователя",
+                "operationId": "/api_v1/users(Put)",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Фамилия пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "Фамилия пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Имя пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "patronymic",
+                        "in": "query",
+                        "description": "Отчество пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Пароль пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_status_id",
+                        "in": "query",
+                        "description": "Статус пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Данные изменены",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Удалить пользователя по его ID",
+                "description": "Данный endpoint позволяет удалить аккаунт пользователя по его id",
+                "operationId": "/api_v1/users{id}(DELETE)",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Держи пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserRequest": {
+                "required": [
+                    "surname",
+                    "name",
+                    "patronymic",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "surname": {
+                        "description": "Фамилия пользователя",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Имя",
+                        "type": "string"
+                    },
+                    "patronymic": {
+                        "description": "Отчество",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "email",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "пароль",
+                        "type": "integer",
+                        "format": "AlphaNumeric"
+                    }
+                },
+                "type": "object"
             }
         }
     },
     "tags": [
         {
             "name": "Users",
-            "description": "abracadabra"
+            "description": "Пользователи приложения",
+            "externalDocs": {
+                "url": "urls"
+            }
+        },
+        {
+            "name": "UserStatus",
+            "description": "Статусы которыми могут обладать пользователи"
+        },
+        {
+            "name": "BalanceUp",
+            "description": "Пополнения баланса"
+        },
+        {
+            "name": "CarBrand",
+            "description": "Марки машин"
+        },
+        {
+            "name": "CarEvent",
+            "description": "События происходящие с машинами"
+        },
+        {
+            "name": "CarModel",
+            "description": "Модели машин"
+        },
+        {
+            "name": "CarStatus",
+            "description": "Статусы которые могут быть у машин"
+        },
+        {
+            "name": "Event",
+            "description": "Список событий которые могут происходить с машиной"
+        },
+        {
+            "name": "FleetOfCar",
+            "description": "Автопарк каршеринга"
+        },
+        {
+            "name": "UserRent",
+            "description": "Платежи пользователей"
         }
     ]
 }

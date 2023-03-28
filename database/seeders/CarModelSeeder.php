@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\CarBrand;
 use App\Models\CarModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CarModelSeeder extends Seeder
 {
@@ -15,15 +17,22 @@ class CarModelSeeder extends Seeder
      */
     public function run()
     {
-        $car_brands = [
-            1 => ['Utopia', 'Huayra', 'Zonda R'],
-            2 => ['Chiron Sport', 'Mistral', 'La Voiture Noire'],
-            3 => ['Granta Sport', 'Priora 2', 'Kalina Sport'],
-            4 => ['Ghibli', 'Levante', 'Quattroporte'],
-            5 => ['Roma', 'Protofino', '488Pista'],
-            6 => ['Aventador', 'Huracan', 'Urus'],
-            7 => ['Wraith', 'Ghost', 'Cullinan'],
-        ];
+        $brands = DB::table('car_brands')->pluck('id');
+        $models = [
+            ['Utopia', 'Huayra', 'Zonda R'],
+            ['Chiron Sport', 'Mistral', 'La Voiture Noire'],
+            ['Granta Sport', 'Priora 2', 'Kalina Sport'],
+            ['Ghibli', 'Levante', 'Quattroporte'],
+            ['Roma', 'Protofino', '488Pista'],
+            ['Aventador', 'Huracan', 'Urus'],
+            ['Wraith', 'Ghost', 'Cullinan'],
+            ];
+        
+        $i=0;
+        foreach($brands as $brand){
+            $car_brands[$brand]=$models[$i++];
+        }
+
         foreach ($car_brands as $car_brand => $car){
             foreach($car as $model){
                 if ($car_brand == 3){

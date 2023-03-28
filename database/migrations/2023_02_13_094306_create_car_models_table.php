@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('car_models', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('car_brand_id')->constrained();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('car_brand_id')->constrained();
             $table->string('car_model');
             $table->string('steering_wheel_layout');
             $table->string('type_of_gearbox');

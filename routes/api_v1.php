@@ -10,9 +10,11 @@ use App\Http\Controllers\API\V1\CarEventController;
 use App\Http\Controllers\API\V1\CarModelController;
 use App\Http\Controllers\API\V1\CarStatusController;
 use App\Http\Controllers\API\V1\FleetOfCarController;
+use App\Http\Controllers\API\V1\FleetOfCarStatusController;
 use App\Http\Controllers\API\V1\UserRentController;
 use App\Http\Controllers\API\V1\UserStatusController;
 use App\Http\Controllers\AuthController;
+use App\Models\FleetOfCar;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,32 +32,41 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Protected Sanctum api
-Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::apiResources([
-        'users' => UserController::class,
-        'events' => EventController::class,
-        'car_brands' => CarBrandContoller::class,
-        'user_statuses' => UserStatusController::class,
-        'car_statuses' => CarStatusController::class,
-        'balance_ups' => BalanceUpController::class,
-        'car_models' => CarModelController::class,
-        'car_events' => CarEventController::class,
-        'user_rents' => UserRentController::class,
-        'fleet_of_cars' => FleetOfCarController::class
-    ]);
-    Route::post('/logout', [AuthController::class, 'logout']);
-});
+// // Protected Sanctum api
+// Route::group(['middleware' => ['auth:sanctum']], function(){
+//     Route::apiResources([
+//         'users' => UserController::class,
+//         'events' => EventController::class,
+//         'car_brands' => CarBrandContoller::class,
+//         'user_statuses' => UserStatusController::class,
+//         'car_statuses' => CarStatusController::class,
+//         'balance_ups' => BalanceUpController::class,
+//         'car_models' => CarModelController::class,
+//         'car_events' => CarEventController::class,
+//         'user_rents' => UserRentController::class,
+//         'fleet_of_cars' => FleetOfCarController::class
+//     ]);
+//     Route::post('/logout', [AuthController::class, 'logout']);
+// });
 
-// Route::apiResources([
-//     'users' => UserController::class,
-//     'events' => EventController::class,
-//     'car_brands' => CarBrandContoller::class,
-//     'user_statuses' => UserStatusController::class,
-//     'car_statuses' => CarStatusController::class,
-//     'balance_ups' => BalanceUpController::class,
-//     'car_models' => CarModelController::class,
-//     'car_events' => CarEventController::class,
-//     'user_rents' => UserRentController::class,
-//     'fleet_of_cars' => FleetOfCarController::class
-// ]);
+Route::apiResources([
+    'users' => UserController::class,
+    'car_brands' => CarBrandContoller::class,
+    'balance_ups' => BalanceUpController::class,
+    'car_models' => CarModelController::class,
+    'car_events' => CarEventController::class,
+    'user_rents' => UserRentController::class,
+    'fleet_of_cars' => FleetOfCarController::class
+]);
+Route::prefix('cars')->group(
+    function(){
+        Route::get('free_car', [FleetOfCarStatusController::class, 'getFreeCar']);
+        Route::get('rent_car', [FleetOfCarStatusController::class,'getRentCar']);
+    }
+);
+
+
+
+
+
+
