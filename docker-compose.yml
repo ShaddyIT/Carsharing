@@ -56,6 +56,7 @@ services:
             PGADMIN_DEFAULT_PASSWORD: carsharing56
         volumes:
             - './pgadmin4/:/var/lib/pgadmin'
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -89,7 +90,7 @@ services:
         restart: always
         hostname: carsharingRabbitMQ
         ports:
-            - "15672:15672"
+            - "15673:15672"
             - "5672:5672"
         networks:
             - sail
@@ -100,7 +101,7 @@ services:
             - RABBITMQ_DEFAULT_PASS=carsharing56
             - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
             - RABBITMQ_DEFAULT_VHOST=carsharing_vhost_default
-            - RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq.conf
+            - RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq.conf     
 
 
 

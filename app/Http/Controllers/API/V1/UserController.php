@@ -99,7 +99,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $new_user = User::create($request->validated());
-        return $new_user;
+        return $new_user->toJson();
     }
 
     /**

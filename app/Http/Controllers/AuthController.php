@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,29 +12,21 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(UserRequest $request){
+    public function register(RegistrationRequest $request){
         $fields = $request->validated();
         $user = User::create([
-            'surname'=>$request['surname'],
-            'name'=>$request['name'],
-            'patronymic'=>$request['patronymic'],
-            'email'=>$request['email'],
-            'password' =>bcrypt($request['password']),
-            'user_status_id' =>$request['user_status_id']
+            'email'=>$fields['email'],
+            'password' =>bcrypt($fields['password'])
         ]);
         $token = $user->createToken('myapptoken')->plainTextToken;
-        $response = [
+        return response()->Json([
             'user' => $user,
             'token' => $token
-        ];
-        return response($response, 201);
+        ]);
     }
 
-    public function login(Request $request){
-        $fields = $request->validate([
-            'email'=>'required|email:rfc|max:255|',
-            'password' => 'required|alpha_num'
-        ]);
+    public function login(RegistrationRequest $request){
+        $fields = $request->validated();
         $user = User::where('email', $fields['email'])->first();
 
         if(!$user or !Hash::check($fields['password'], $user->password)){
@@ -45,8 +38,8 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token
         ];
-       
-        return response($response, 201);
+       $bearer = 'Bearer ' . $token;
+        return response($response, 201)->cookie('Authorization', $bearer);
     }
 
     public function logout(Request $request){
